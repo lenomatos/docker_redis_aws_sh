@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  redis:
+    image: redis/redis-stack:latest
+
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"
+      - "4571:4571"
+    environment:
+      - SERVICES=dynamodb
+      - START_WEB=0
+
+  app:
+    build: .
+    volumes:
+      - ./book.sh:/app/book.sh
+    environment:
+      - AWS_ACCESS_KEY_ID=mock
+      - AWS_SECRET_ACCESS_KEY=mock
+      - AWS_DEFAULT_REGION=us-east-1
+      - DYNAMODB_ENDPOINT=http://localstack:4566
+      - REDIS_HOST=redis
+    depends_on:
+      - localstack
+      - redis

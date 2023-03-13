@@ -1,0 +1,12 @@
+{
+  "TableName": "Books",
+  "KeySchema": [{ "AttributeName": "registerCode", "KeyType": "HASH" }],
+  "AttributeDefinitions": [
+    { "AttributeName": "registerCode", "AttributeType": "S" },
+    { "AttributeName": "title", "AttributeType": "S" }
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": 5,
+    "WriteCapacityUnits": 5
+  }
+}
